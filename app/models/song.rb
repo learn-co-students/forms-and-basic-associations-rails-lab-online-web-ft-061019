@@ -17,10 +17,21 @@ class Song < ActiveRecord::Base
 
   def artist_name
     self.artist ? self.artist.name : nil
+  
+  end
+
+  def note_contents=(content)
+    content.each do |note|
+      if note != ""
+    self.notes << Note.new(content: note)
+      end
+    end
   end
   
-  def note_contents=(content)
-      self.note = Note.find_or_create_by(content: content)
+  def note_contents
+    self.notes.map do |note|
+      note.content
+    end 
   end
 
 end
